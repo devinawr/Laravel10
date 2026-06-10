@@ -90,11 +90,13 @@
                         onclick="getEditFormB({{ $c->id }})">
                         Edit Type B
                     </button>
+                    @can('delete-permission', Auth::user())
                      <a href="#"
     class="btn btn-danger"
     onclick="if(confirm('Are you sure to delete {{ $c->id }} - {{ $c->category_name }} ?')) deleteDataRemove({{ $c->id }});">
     Delete without Reload
 </a>
+@endcan
 
                     <form method="POST" action="{{ route('categories.destroy', $c->id) }}" style="display: inline-block;">
                         @csrf

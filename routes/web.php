@@ -1,5 +1,5 @@
 <?php
-
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\DoctorController;
@@ -102,3 +102,7 @@ Route::post("/category/showInfo",[CategoryController::class, 'showInfo'])->name(
 Route::post("/category/showListServices",
             [CategoryController::class, 'showListServices'])
         ->name("category.showListServices");
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
