@@ -1,9 +1,14 @@
 @extends('layouts.adminlte4')
+
 @section('title', 'Transaction Page')
 @section('sidebar-transaction', 'active')
+
 @section('content')
-    <div class="mb-3">
+    <div class="mb-3 d-flex justify-content-between align-items-center">
         <h2>Transactions Table</h2>
+        <a href="{{ route('transactions.create') }}" class="btn btn-primary">
+            <i class="fas fa-plus"></i> Add Transaction
+        </a>
     </div>
 
     <div id="ajaxMessage"></div>
@@ -22,13 +27,13 @@
                 <th>User ID</th>
                 <th>Doctor ID</th>
                 <th>Service Type</th>
+                <th>Services</th>
                 <th>Total Price</th>
                 <th>Status</th>
                 <th>Date</th>
                 <th>Actions</th>
             </tr>
         </thead>
-
         <tbody>
             @foreach ($transactions as $transaction)
             <tr id="tr_{{ $transaction->id }}">
@@ -36,6 +41,13 @@
                 <td id="td_user_{{ $transaction->id }}">{{ $transaction->user_id }}</td>
                 <td id="td_doctor_{{ $transaction->id }}">{{ $transaction->doctor_id }}</td>
                 <td id="td_type_{{ $transaction->id }}">{{ $transaction->service_type }}</td>
+                <td>
+                    <ul class="mb-0">
+                        @foreach ($transaction->services as $service)
+                            <li>{{ $service->service_name }} ({{ $service->pivot->qty }})</li>
+                        @endforeach
+                    </ul>
+                </td>
                 <td id="td_amount_{{ $transaction->id }}">{{ $transaction->amount }}</td>
                 <td id="td_status_{{ $transaction->id }}">{{ $transaction->status }}</td>
                 <td id="td_date_{{ $transaction->id }}">{{ $transaction->created_at }}</td>
@@ -111,6 +123,7 @@
                             $('#td_amount_' + id).html(amount);
                             $('#td_status_' + id).html(status);
                             $('#td_date_' + id).html(transactionDate);
+
                             var modalEl = document.getElementById('modalEditB');
                             var modal = bootstrap.Modal.getInstance(modalEl);
                             modal.hide();

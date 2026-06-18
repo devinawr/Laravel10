@@ -15,8 +15,9 @@ class TransactionController extends Controller
      * Display a listing of the resource.
      */
     public function index()
-    {
-        $transactions = DB::table('transaction')->get();
+    {   
+        $transactions = Transaction::with('services')->latest()->get();
+        //$transactions = DB::table('transaction')->get();
         return view('transactions.index', compact('transactions'));
     }
 

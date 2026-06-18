@@ -21,6 +21,6 @@ class Service extends Model
     }
     public function transactions()
     {
-        return $this->belongsToMany(Transaction::class) ->withPivot('qty')->withTimestamps();
+        return $this->belongsToMany(Transaction::class, 'transaction_services', 'service_id', 'transaction_id') ->withPivot('qty')->withTimestamps();
     }
 }
